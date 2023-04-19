@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<universities>
+    <university id="1" name="ВГУИТ">
+        <tilte>Поступление</tilte>
+        <text>
+            Я поступил в <university>ВГУИТ</university> в городе <city>Воронеж</city> с проходным баллом <ball>129</ball> на специальность <specialization>Информационные системы и программирование</specialization>!
+        </text>
+    </university> 
+</universities>
