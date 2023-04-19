@@ -11,16 +11,14 @@ $result = $mysqli->query("SELECT * FROM `users` WHERE `login` = '$login' AND `pa
 $user = $result->fetch_assoc();
 
 if (mysqli_num_rows($result) > 0) {
-   
-$_SESSION['user'] = [
-    "id"=> $user['id'],
-    "login"=> $user['login'],
-    "background"=>  $user['background']
-];
-header('Location: index.php');
+
+    setcookie('id', $user['id'], time() + 40, "/");
+    setcookie('login', $user['login'], time() + 40, "/");
+    setcookie('password', $user['password'], time() + 40, "/");
+    setcookie('background', $user['background'], time() + 40, "/");
+
+    header('Location: index.php');
 } else {
     echo '<h3 class="text-center">Неверный логин или пароль</h3>';
     exit();
 }
-
-
