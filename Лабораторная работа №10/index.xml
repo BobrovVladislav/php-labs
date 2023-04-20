@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+ <!-- Имя файла: index.xml -->
+<Customer>
+`   <id>1</id>
+    <name>Марк</name>
+    <address>Санкт-Петербург</address>  
+</Customer>
