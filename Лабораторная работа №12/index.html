@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <form id="feedback-form" action="" class="form">
+        <div class="columns">
+            <div class="column_form">
+                <div class="form_header">
+                    <h3>Отправить заявку</h3>
+                    <img src="/img/mail_black.svg" alt="">
+                </div>
+                <div class="form_block">
+                    <input type="text" name="name" placeholder="Ваше имя">
+                    <input type="text" name="second_name" placeholder="Ваша фамилия">
+                    <input type="tel" name="phone" placeholder="Телефон" class="tel_mask">
+                    <input type="text" name="email" placeholder="Ваш e-mail">
+                    <input type="text" class="extra" name="company" placeholder="Название компании">
+                    <textarea  class="extra" name="coment" id="" cols="30" rows="5"  placeholder="Как мы можем вам помочь?"></textarea>
+                </div>
+                <div class="form_footer">
+                    <p id="message_form"></p>
+                    <button type="submit">
+                        <img src="/img/send.svg" alt="">
+                        <p>Отправить</p>
+                    </button>
+                </div>
+            </div>
+            <div class="column_cont">
+                <div class="cont_flex">
+                    <h3>Контакты</h3>
+                </div>
+                <a href="tel:+79961780710" class="cont_flex">
+                    <img src="/img/phone.svg" alt="">
+                    <p>+7 (996) 178-07-10</p>
+                </a>
+                <a href="mailto:yan_borovsky@mail.ru" class="cont_flex">
+                    <img src="/img/mail.svg" alt="">
+                    <p>yan_borovsky@mail.ru</p>
+                </a>
+                <div class="cont_flex">
+                    <img src="/img/wt.svg" alt="">
+                    <img src="/img/tg.svg" alt="">
+                    <img src="/img/vk.svg" alt="">
+                    <img src="/img/yt.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".form").submit(function () {
+                // Получение ID формы
+                var formID = $(this).attr('id');
+                // Добавление решётки к имени ID
+                var formNm = $('#' + formID);
+                $.ajax({
+                    type: "POST",
+                    url: 'send.php',
+                    data: formNm.serialize(),
+                    beforeSend: function () {
+                        // Вывод текста в процессе отправки
+                        $("#message_form").html('<p style="text-align:center">Отправка...</p>');
+                    },
+                    success: function (data) {
+                        // Вывод текста результата отправки
+                        $("#message_form").html('<p style="text-align:center">Ваша заявка успешно отправлена!</p>');
+                    },
+                    error: function (jqXHR, text, error) {
+                        // Вывод текста ошибки отправки
+                        $("#message_form").html(error);
+                    }
+                });
+                return false;
+            });
+        });
+        </script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.16.0/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.5/jquery.inputmask.min.js"></script>
+        <script>
+            $('.tel_mask').inputmask("+7(999)999-9999");
+
+            // добавляем правило для валидации телефона
+            jQuery.validator.addMethod("checkMaskPhone", function(value, element) {
+                return /\+\d{1}\(\d{3}\)\d{3}-\d{4}/g.test(value); 
+            });
+
+            // получаем нашу форму по class
+            var form = $('.quiz_form');
+
+            // включаем валидацию в форме
+            form.validate();
+
+            // вешаем валидацию на поле с телефоном по классу
+            $.validator.addClassRules({
+                'phone-field': {
+                    checkMaskPhone: true,
+                }
+            });
+
+        </script>
+
+
+
+</body>
+</html>
